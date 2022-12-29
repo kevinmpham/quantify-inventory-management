@@ -6,7 +6,11 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
+const connectDB = require('./config/dbConn');
+const mongoose = require('mongoose');
 const PORT = process.env.PORT || 3500;
+
+connectDB();
 
 app.use(express.json());
 app.use(cookieParser());
@@ -15,6 +19,8 @@ app.use(cors(corsOptions))
 
 app.use('/', express.static(path.join(__dirname, '/public')))
 app.use('/', require('./routes/root.js'))
+app.use('/inventory', require('./routes/inventoryRoutes.js'))
+
 app.all('*', (req, res) => {
   res.status(404)
   if (req.accepts('html')) {
@@ -25,9 +31,6 @@ app.all('*', (req, res) => {
     res.type('txt').send('404 not found')
   }
 })
-
-app.listen(PORT, () => console.log(`server ${PORT}`))
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -44,5 +47,10 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+mongoose.connection.once('open', () => {
+  console.log('connected to MongoDB')
+  app.listen(PORT, () => console.log(`server ${PORT}`))
+})
 
 /* module.exports = server; */
