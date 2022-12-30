@@ -10,9 +10,8 @@ const getAllItems = asyncHandler(async (req, res) => {
   res.json(inventoryItems);
 })
 
-const createNewItem = asyncHandler(async (req, res) => {
+const createItem = asyncHandler(async (req, res) => {
   const { item, quantity, categories } = req.body;
-
   const newItem = { item, quantity, categories }
   const inventoryItem = await Inventory.create(newItem);
   res.json(inventoryItem);
@@ -32,9 +31,10 @@ const updateItem = asyncHandler(async (req, res) => {
 
 const deleteItem = asyncHandler(async (req, res) => {
   const { id } = req.body;
+  console.log(req.body)
   const inventoryItem = await Inventory.findById(id).exec();
   const deleted = (await inventoryItem.deleteOne());
   res.send("delted");
 })
 
-module.exports = { getAllItems, createNewItem, updateItem, deleteItem }
+module.exports = { getAllItems, createItem, updateItem, deleteItem }

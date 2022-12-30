@@ -5,7 +5,7 @@ const inventoryController = require('../controllers/inventoryController');
 
 router.route('/')
   .get(inventoryController.getAllItems)
-  .post(inventoryController.createNewItem)
+  .post(inventoryController.createItem)
   .patch(inventoryController.updateItem)
   .delete(inventoryController.deleteItem)
 
