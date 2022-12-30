@@ -14,11 +14,11 @@ const createItem = asyncHandler(async (req, res) => {
   const { item, quantity, categories } = req.body;
   const newItem = { item, quantity, categories }
   const inventoryItem = await Inventory.create(newItem);
-  res.json(inventoryItem);
+  res.send("created")
 })
 
 const updateItem = asyncHandler(async (req, res) => {
-  const { id, item, quantity, categories } = req.body;
+  const { _id: id, item, quantity, categories } = req.body;
 
   const inventoryItem = await Inventory.findById(id).exec();
   inventoryItem.item = item;
@@ -26,15 +26,14 @@ const updateItem = asyncHandler(async (req, res) => {
   inventoryItem.categories = categories;
 
   const updatedInventoryItem = await inventoryItem.save();
-  res.send("updated");
+  res.send("updated")
 })
 
 const deleteItem = asyncHandler(async (req, res) => {
   const { id } = req.body;
-  console.log(req.body)
   const inventoryItem = await Inventory.findById(id).exec();
   const deleted = (await inventoryItem.deleteOne());
-  res.send("delted");
+  res.send("deleted");
 })
 
 module.exports = { getAllItems, createItem, updateItem, deleteItem }

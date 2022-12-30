@@ -10,7 +10,6 @@ export const getInventory = async () => {
 }
 
 export const createItem = async (inventory) => {
-  console.log(inventory)
   return await inventoryApi.post("/inventory", inventory)
 }
 

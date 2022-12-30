@@ -1,15 +1,27 @@
 import { useState } from "react"
-import { useContext } from "react";
-import InventoryContext from "../context/InventoryContext";
 import InventoryItem from "./InventoryItem";
+import { useQuery, useMutation, useQueryClient } from "react-query"
+import { getInventory, createItem } from "../api/inventoryApi"
 
 
 const Inventory = () => {
   const [newItem, setNewItem] = useState('');
   const [newQuantity, setNewQuantity] = useState(0);
-  const { inventory, createItemMutation, isLoading, isError, error } = useContext(InventoryContext);
-  console.log(inventory);
 
+  const queryClient = useQueryClient();
+
+  const {
+    isLoading,
+    isError,
+    error,
+    data: inventory
+  } = useQuery('inventory', getInventory)
+
+  const createItemMutation = useMutation(createItem, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("inventory");
+    }
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,7 +44,7 @@ const Inventory = () => {
   if (isLoading) {
     <p>Loading...</p>
   } else if (isError) {
-    <p>Error...</p>
+    <p>{error}...</p>
   } else {
     content = (
       <ul>
@@ -42,7 +54,6 @@ const Inventory = () => {
       </ul>
     )
   }
-
 
   return (
     <div>
