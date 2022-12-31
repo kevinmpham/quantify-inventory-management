@@ -20,7 +20,7 @@ const createUser = async (req, res) => {
 
   // Hash password 
   const hashedPwd = await bcrypt.hash(password, 10)
-  const userObject = { username, "password": hashedPwd }
+  const userObject = { username, "password": hashedPwd, refreshToken: '' }
 
   // Create and store new user 
   const user = await User.create(userObject)

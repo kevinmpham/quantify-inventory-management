@@ -11,6 +11,8 @@ const Register = () => {
     e.preventDefault();
     try {
       createUser({ username, password })
+      setUsername('');
+      setPassword('');
       //navigate("/library")
     } catch (err) {
       console.log(err)
@@ -19,6 +21,7 @@ const Register = () => {
 
   return (
     <section>
+      <h1> Register </h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor='username'>Username: </label>
         <input type="text" id="username" onChange={(e) => setUsername(e.target.value)} required></input>

@@ -1,14 +1,28 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import InventoryItem from "./InventoryItem";
 import { useQuery, useMutation, useQueryClient } from "react-query"
-import { getInventory, createItem } from "../api/inventoryApi"
+import { createItem, inventoryApi } from "../api/inventoryApi"
+import AuthContext from "../context/AuthContext";
 
 
 const Inventory = () => {
   const [newItem, setNewItem] = useState('');
   const [newQuantity, setNewQuantity] = useState(0);
+  const { auth } = useContext(AuthContext);
 
   const queryClient = useQueryClient();
+
+  const getInventory = async () => {
+    const response = await inventoryApi.get(
+      "/inventory",
+      {
+        headers: {
+          authorization: `Bearer ${auth.accessToken}`
+        }
+      }
+    );
+    return response.data;
+  }
 
   const {
     isLoading,
@@ -25,7 +39,7 @@ const Inventory = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createItemMutation.mutate({ item: newItem, quantity: newQuantity });
+    createItemMutation.mutate({ item: newItem, quantity: newQuantity, user: auth.username });
     setNewItem('');
     setNewQuantity(0);
   }
@@ -46,9 +60,11 @@ const Inventory = () => {
   } else if (isError) {
     <p>{error}...</p>
   } else {
+    let filteredInventory = [];
+    filteredInventory = inventory.filter(invenItem => invenItem.user === auth.username);
     content = (
       <ul>
-        {inventory.map(inventoryItem => {
+        {filteredInventory.map(inventoryItem => {
           return <InventoryItem key={inventoryItem._id} inventoryItem={inventoryItem} />
         })}
       </ul>
@@ -56,10 +72,11 @@ const Inventory = () => {
   }
 
   return (
-    <div>
+    <section>
+      <h1>Inventory</h1>
       {newItemForm}
       {content}
-    </div>
+    </section>
   )
 }
 

@@ -4,8 +4,9 @@ import Layout from './components/Layout';
 import Home from './components/Home'
 import Login from './components/Login'
 import Inventory from './components/Inventory'
-import EditInventoryForm from './components/EditInventoryForm';
+import EditInventoryForm from './components/InventoryEditForm';
 import Register from './components/Register';
+import RequireAuth from './components/RequireAuth';
 
 function App() {
   return (
@@ -15,11 +16,14 @@ function App() {
           <Route index element={<Home />} />
           <Route path='register' element={<Register />} />
           <Route path='login' element={<Login />} />
-          <Route path='inventory' element={<Inventory />} />
-          <Route path='inventory/edit' element={<EditInventoryForm />} />
+
+          <Route element={<RequireAuth />} >
+            <Route path='inventory' element={<Inventory />} />
+            <Route path='inventory/edit' element={<EditInventoryForm />} />
+          </Route>
         </Route>
       </Routes >
-    </div>
+    </div >
   );
 }
 

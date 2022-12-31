@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const inventoryApi = axios.create({
+export const inventoryApi = axios.create({
   baseURL: "http://localhost:3500"
 })
 
-export const getInventory = async () => {
+/* export const getInventory = async () => {
   const response = await inventoryApi.get("/inventory");
   return response.data;
-}
+} */
 
 export const createItem = async (inventory) => {
   return await inventoryApi.post("/inventory", inventory)

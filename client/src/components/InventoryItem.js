@@ -1,7 +1,6 @@
 import React from 'react'
 import { useContext } from "react";
 import { Link } from 'react-router-dom';
-import InventoryContext from "../context/InventoryContext";
 import { useMutation, useQueryClient } from "react-query"
 import { deleteItem } from "../api/inventoryApi"
 

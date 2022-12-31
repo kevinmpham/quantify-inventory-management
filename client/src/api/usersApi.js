@@ -11,3 +11,5 @@ export const createUser = async (user) => {
 export const updateItem = async (user) => {
   return await usersApi.patch("/users", user)
 }
+
+export default usersApi

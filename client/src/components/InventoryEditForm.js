@@ -6,8 +6,6 @@ import { updateItem } from "../api/inventoryApi"
 
 
 
-
-
 const EditInventoryForm = () => {
   const location = useLocation()
   const inventoryItem = location.state.inventoryItem;
