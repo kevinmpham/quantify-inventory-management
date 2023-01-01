@@ -1,16 +1,25 @@
-import { useState } from 'react'
+/* import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-
 import { useMutation, useQueryClient } from "react-query"
-import { updateItem } from "../api/inventoryApi"
+import axiosApi from '../api/axiosApi'
+import useAuth from '../hooks/useAuth'
 
 
 
 const EditInventoryForm = () => {
   const location = useLocation()
   const inventoryItem = location.state.inventoryItem;
+  const { config } = useAuth();
+  const navigate = useNavigate();
+  const [newItem, setNewItem] = useState(inventoryItem.item);
+  const [newQuantity, setNewQuantity] = useState(inventoryItem.quantity);
+
 
   const queryClient = useQueryClient();
+
+  const updateItem = async (inventory) => {
+    return await axiosApi.patch("/inventory", inventory, config)
+  }
 
   const updateItemMutation = useMutation(updateItem, {
     onSuccess: () => {
@@ -18,16 +27,13 @@ const EditInventoryForm = () => {
     }
   })
 
-  const navigate = useNavigate();
-  const [newItem, setNewItem] = useState(inventoryItem.item);
-  const [newQuantity, setNewQuantity] = useState(inventoryItem.quantity);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newInventoryItem = inventoryItem;
     newInventoryItem.item = newItem;
     newInventoryItem.quantity = newQuantity;
-    console.log(newInventoryItem)
     updateItemMutation.mutate(newInventoryItem);
     navigate('/inventory');
   }
@@ -48,4 +54,4 @@ const EditInventoryForm = () => {
   )
 }
 
-export default EditInventoryForm
+export default EditInventoryForm */

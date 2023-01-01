@@ -4,7 +4,6 @@ import Layout from './components/Layout';
 import Home from './components/Home'
 import Login from './components/Login'
 import Inventory from './components/Inventory'
-import EditInventoryForm from './components/InventoryEditForm';
 import Register from './components/Register';
 import RequireAuth from './components/RequireAuth';
 
@@ -19,7 +18,6 @@ function App() {
 
           <Route element={<RequireAuth />} >
             <Route path='inventory' element={<Inventory />} />
-            <Route path='inventory/edit' element={<EditInventoryForm />} />
           </Route>
         </Route>
       </Routes >

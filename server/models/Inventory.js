@@ -10,9 +10,9 @@ const InventorySchema = new Schema({
     type: Number,
     required: true
   },
-  categories: [{
+  category: {
     type: String,
-  }],
+  },
   user: {
     type: String,
     required: true

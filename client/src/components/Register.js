@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { createUser } from "../api/usersApi";
+import { createUser } from "../api/axiosApi";
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -13,23 +13,46 @@ const Register = () => {
       createUser({ username, password })
       setUsername('');
       setPassword('');
-      //navigate("/library")
+      navigate("/login")
     } catch (err) {
       console.log(err)
     }
   }
 
   return (
-    <section>
-      <h1> Register </h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='username'>Username: </label>
-        <input type="text" id="username" onChange={(e) => setUsername(e.target.value)} required></input>
-        <label htmlFor='password'>Password: </label>
-        <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} required></input>
-        <button type="submit">Submit</button>
-      </form>
-    </section>
+    <div className="container">
+      <div className="row">
+        <div className="col-md-6 offset-md-3">
+          <div className="card my-5 p-3 auth-box">
+            <h2 className="text-center"> Register </h2>
+            <form onSubmit={handleSubmit} className="card-body p-lg-5">
+              <div className='row mb-3 justify-content-center'>
+
+                <input type="text"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  className="form-control"
+                  placeholder="Username"
+                />
+              </div>
+              <div className='row mb-3 justify-content-center'>
+                <input type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="form-control"
+                  placeholder="Password"
+                />
+              </div>
+              <button type="submit" className="btn btn-dark w-100">Register</button>
+            </form>
+          </div>
+        </div>
+      </div >
+    </div >
   )
 }
 
